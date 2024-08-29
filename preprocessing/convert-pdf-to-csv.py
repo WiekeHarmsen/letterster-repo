@@ -88,19 +88,22 @@ def run(args):
 
     # 2. Get input pdfs and subdirectories from dataDir
     pdfDir = os.path.join(dataDir, '01_pdf')
-    dictation_dir = os.path.join(dataDir, '02_dictations')
-    error_cat_dir = os.path.join(dataDir, '03_error_categories')
+    assert os.path.exists(pdfDir), 'Folder 01_pdf is not present in ' + dataDir
 
-    # 2. Read pdf files
+    # 3. PDF operations
+
+    # 3a. List pdf files
     pdf_file_list = glob.glob(os.path.join(pdfDir, '*.pdf'))
 
-    # 3. Get basenames of pdf files
+    # 3b. Get basenames of pdf files
     basename_list = [os.path.basename(pdfFileName).replace('.pdf', '') for pdfFileName in pdf_file_list]
 
-    # 3. Convert the pdf files to txt files
+    # 3c. Convert the pdf files to txt files
     txt_file_list = [convert_pdf_to_txt(pdfFile) for pdfFile in pdf_file_list]
 
     # 4. Create output directories
+    dictation_dir = os.path.join(dataDir, '02_dictations')
+    error_cat_dir = os.path.join(dataDir, '03_error_categories')
     create_output_directories(dictation_dir, error_cat_dir)
 
     # 5. Parse each txt file and export the information
@@ -118,10 +121,8 @@ def run(args):
 
         write_output_files(dictationDF, dictation_dir, filename)
         write_output_files(errorCategoryDF, error_cat_dir, filename)
-
-        # dictationDF.to_csv(os.path.join(dictation_dir, filename), sep= '\t')
-        # errorCategoryDF.to_csv(os.path.join(error_cat_dir, filename), sep= '\t')
-        
+    
+    # Export the overarching information, providing an overview of all tests
     metadataDF = pd.DataFrame(metadataList, columns = ['filename', 'author', 'testID', 'date_exported(dd-mm-yy)', 'link', 'day_administration', 'time_administration(hh:mm)', 'attempts', 'duration(hh:mm:ss)', 'length_dication(nr_words)', 'correct(nr_words)', 'incorrect(nr_words)'])
     write_output_files(metadataDF, dataDir, 'task-level-results')
 
