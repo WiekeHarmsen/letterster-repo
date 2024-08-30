@@ -1,0 +1,18 @@
+cd /vol/tensusers5/wharmsen
+
+./sctk score \
+  --ignore-first=true \
+  --delimiter="," \
+  --col-id=0 \
+  --col-trn=1 \
+  --normalize-unicode=true \
+  --cer=false \
+  --out=/vol/tensusers2/wharmsen/letterster-corpus/round1/dmt-reading/03_transcriptions/02_tg_orth_trans/report_WER_Roos_Bram \
+  --ref=/vol/tensusers2/wharmsen/letterster-corpus/round1/dmt-reading/03_transcriptions/02_tg_orth_trans/orthTrans_Roos_overlap-copy.csv \
+  --hyp=/vol/tensusers2/wharmsen/letterster-corpus/round1/dmt-reading/03_transcriptions/02_tg_orth_trans/orthTrans_Bram_overlap-copy.csv
+
+  # The output is printed in /vol/tensusers5/wharmsen/report
+  # Set cer=true to get CER and false to get WER
+
+  --hyp=/vol/tensusers2/wharmsen/SERDA-experiment-data/round1/stories_manann_11jan/whispert_dis/csv-alignments/asr-transcriptions.csv \
+  --hyp=/vol/tensusers2/wharmsen/SERDA-experiment-data/round1/stories_manann_11jan/ctc_kurz_w2v_fc/csv-alignments/asr-transcriptions.csv \
